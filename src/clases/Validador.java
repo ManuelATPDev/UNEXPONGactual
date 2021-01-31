@@ -46,15 +46,34 @@ public class Validador {
     }
 
     public void ValidarEmail() {
-
+        
+        /**Rellenar el vector unidemensional "caracter[]" para que tenga cada una de las letras que se encuentran
+         * en la variable String "verificarpalabra" con un bucle for
+         */
+        
         for (int i = 0; i < posiciones; i++) {
             caracter[i] = verificarpalabra.substring(i, i + 1);
         }
+        
+        /**Rellenar el vector unidemensional "caracternumeros[]" para que tenga cada uno de los numeros que se encuentran
+         * en la variable String "verificarnumeros" con un bucle for
+         */
+        
         for (int i = 0; i < posicionesnumeros; i++) {
             caracternumeros[i] = verificarnumeros.substring(i, i + 1);
         }
+        
+        /**Se inicia con un bucle for con el cual se va a verificar cada caracter de la cadena de caracteres que se envian
+         * a través de las vistas "Registrar"
+         * 
+         */
 
         for (int i = 0; i < email.length(); i++) {
+            
+            /**Se comprueba que el caracter que se haya encontrado sea un "@" que está
+             * almacenado en la variable String "verificaremail" y se comprueba que el tamaño
+             * de la cadena de caracteres "email" sea mayor que 1 para saber que tiene más de 1 caracter
+             */
             if (email.substring(i, i + 1).equals(verificaremail) && email.length() > 1) {
 
                 for (int j = 0; j < i + 1; j++) {
