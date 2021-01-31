@@ -5,16 +5,18 @@ public class Validador {
     //Declaración de variables
     private String verificarpalabra; //Almacena la cadena de caracteres que contiene las letras.
     private String verificaremail; //Almacena el "@".
+    private String verificarnumeros; //Almacena la cadena de caracteres que contiene los numeros.
     private String nombre; //Almacena el "nombre" enviado desde las vistas "Registro".
     private String email; //Almacena el "email" enviado desde las vistas "Registro".
-    private String verificarnumeros; //Almacena la cadena de caracteres que contiene los numeros.
-    private String caracter[]; //Almacena cada uno de los caracter de la cadena de caracteres de las letras.
-    private String caracternumeros[];//Almacena cada uno de los caracter de la cadena de caracteres de los números.
+    private String cedula; //Almacena la "cedula" enviado desde las vistas "Registro".
+    private String expediente; //Almacena el "expediente" enviado desde las vistas "Registro".
     private int posiciones; //Almacena la longitud de la cadena de caracteres que contiene las letras.
+    private String caracter[]; //Almacena cada uno de los caracter de la cadena de caracteres de las letras.
+    private int posicionesnumeros; //Almacena la longitud de la cadena de caracteres que contiene los numeros.
+    private String caracternumeros[];//Almacena cada uno de los caracter de la cadena de caracteres de los números.
     private int acceso; //Sirve como bandera para saber si se paso la comprobación.
     private int acceso2; //Sirve como bandera para saber si se paso la comprobación.
     private int erroracceso2; //Sirve como bandera para saber si ocurrio un error en la comprobación.
-    private int posicionesnumeros; //Almacena la longitud de la cadena de caracteres que contiene los numeros.
     private int validarpar; //Almacena el resto de acceso.
     private int validarpar2; //Almacena el resto de acceso2.
     public boolean verificado; //Indica si se ha completado exitosamente o no todas las comprobaciones.
@@ -22,6 +24,7 @@ public class Validador {
     public Validador(String palabra) {
 
         //Inicializando variables
+        //NOMBRE
         this.verificarpalabra = "ÁÉÍÓÚáéíóúabcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
         this.nombre = palabra;
         this.posiciones = verificarpalabra.length();
@@ -29,16 +32,22 @@ public class Validador {
         this.acceso = 0;
         this.verificado = false;
 
+        //EMAIL
+        this.email = palabra;
         this.acceso2 = 0;
         this.erroracceso2 = 0;
         this.verificaremail = "@";
-        this.email = palabra;
         this.validarpar = 0;
         this.validarpar2 = 0;
 
+        //NÚMEROS
+        this.expediente = palabra;
         this.verificarnumeros = "0123456789";
         this.posicionesnumeros = verificarnumeros.length();
         this.caracternumeros = new String[posicionesnumeros];
+
+        //CÉDULA
+        this.cedula = palabra;
     }
 
     //Metodo para validar el nombre
@@ -61,11 +70,10 @@ public class Validador {
         for (int i = 0; i < nombre.length(); i++) {
 
             /**
-             * Se realiza un bucle for para recorrer el vector
-             * "caracternumeros[]" y verificar que ese caracter pertenezca al
-             * grupo de caracteres almacenados en el vector y de ser correcto
-             * esta comprobación, ".equals", se incrementa la variable de acceso
-             * "acceso" en 1.
+             * Se realiza un bucle for para recorrer el vector "caracter[]" y
+             * verificar que ese caracter pertenezca al grupo de caracteres
+             * almacenados en el vector y de ser correcto esta comprobación,
+             * ".equals", se incrementa la variable de acceso "acceso" en 1.
              */
             for (int j = 0; j < posiciones; j++) {
                 if (nombre.substring(i, i + 1).equals(caracter[j])) {
@@ -289,6 +297,124 @@ public class Validador {
          * deben tener un valor distinto a 0.
          */
         if (validarpar == 0 && validarpar2 == 0 && acceso != 0 && acceso2 != 0) {
+            verificado = true;
+        } else {
+            verificado = false;
+        }
+    }
+
+    //Metodo para validar la cedula
+    public void ValidarCedula() {
+
+        /**
+         * Rellenar el vector unidemensional "caracternumeros[]" para que tenga
+         * cada uno de los numeros que se encuentran en la variable String
+         * "verificarnumeros" con un bucle for.
+         */
+        for (int i = 0; i < posicionesnumeros; i++) {
+            caracternumeros[i] = verificarnumeros.substring(i, i + 1);
+        }
+
+        /**
+         * Se inicia con un bucle for con el cual se va a verificar cada
+         * caracter de la cadena de caracteres que se envian a través de las
+         * vistas "Registrar" almacenado en la variable "cedula".
+         */
+        for (int i = 0; i < cedula.length(); i++) {
+
+            /**
+             * Se comprueba que el caracter que se haya encontrado sea una "V" o
+             * "E" seguido de un "-" y se comprueba que el tamaño de la cadena
+             * de caracteres "cedula" sea mayor o igual que 8 para saber que
+             * tiene 8 o más caracteres.
+             */
+            if (email.substring(i, i + 1).equals("V") || email.substring(i, i + 1).equals("E") && email.substring(i + 1, i + 2).equals("-") && email.length() >= 10) {
+
+                /**
+                 * Se recorre, ".substring", la cadena de caracteres que se
+                 * encuentran después del caracter "V- o E-" y verificar que ese
+                 * caracter pertenezca al grupo de caracteres almacenados en el
+                 * vector "caracternumeros[]" recorrido por un bucle for para
+                 * analizar cada uno de los casos y de ser correcto esta
+                 * comprobación, ".equals", se incrementa la variable de acceso
+                 * "acceso" en 1.
+                 */
+                for (int j = i + 2; j < cedula.length(); j++) {
+                    for (int m = 0; m < posicionesnumeros; m++) {
+                        if (email.substring(j, cedula.length()).equals(caracternumeros[m])) {
+                            acceso++;
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Se comprueba que la variable de acceso haya aumentado (Esto
+             * indica si lo que se escrbio fue un número o no) y se aumenta la
+             * variable de acceso2 en 1 por cada vez que esto suceda
+             */
+            if (acceso == 1) {
+                acceso2++;
+            } else {
+                acceso2--;
+            }
+            System.out.println(acceso2);
+
+            /**
+             * Se comprueba que la variable acceso2 haya aumentado 10 o más
+             * veces debido a que la variable cédula deberá contener 10 o más
+             * carácteres (Contando V- o E-) y se envia la variable verificado a
+             * las vistas "Registro".
+             */
+            if (acceso2 >= 10) {
+                verificado = true;
+            } else {
+                verificado = false;
+            }
+        }
+    }
+
+    //Metodo para validar el expediente
+    public void ValidarExpediente() {
+
+        /**
+         * Rellenar el vector unidemensional "caracternumeros[]" para que tenga
+         * cada uno de los numeros que se encuentran en la variable String
+         * "verificarnumeros" con un bucle for.
+         */
+        for (int i = 0; i < posicionesnumeros; i++) {
+            caracternumeros[i] = verificarnumeros.substring(i, i + 1);
+        }
+
+        /**
+         * Se inicia con un bucle for con el cual se va a verificar cada
+         * caracter de la cadena de caracteres que se envian a través de las
+         * vistas "Registrar" almacenado en la variable "expediente".
+         */
+        for (int i = 0; i < expediente.length(); i++) {
+
+            /**
+             * Se realiza un bucle for para recorrer el vector
+             * "caracternumeros[]" y verificar que ese caracter pertenezca al
+             * grupo de caracteres almacenados en el vector y de ser correcto
+             * esta comprobación, ".equals", se incrementa la variable de acceso
+             * "acceso" en 1.
+             */
+            for (int j = 0; j < posicionesnumeros; j++) {
+                if (email.substring(i, i + 1).equals(caracternumeros[j])) {
+                    acceso++;
+                }
+            }
+        }
+
+        System.out.println(acceso);
+        /**
+         * Se comprueba que la variable acceso haya aumentado 9 o más veces como
+         * para saber que cada uno si pertenece al grupo de caracteres en el
+         * vector "caracternumeros[]" y se envia la variable verificado a las
+         * vistas "Registro".
+         */
+        if (acceso >= 9) {
             verificado = true;
         } else {
             verificado = false;

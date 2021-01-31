@@ -21,8 +21,9 @@ import javax.swing.WindowConstants;
  * @author Manuel
  */
 public class RegistrarAdministradores extends javax.swing.JFrame {
-    
-    String user,nombre_usuario;
+
+    String user, nombre_usuario;
+
     /**
      * Creates new form RegistrarAdministradores
      */
@@ -30,14 +31,14 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         initComponents();
         user = Administrador.nombre_usuario;
         setTitle("Registrar Administrador - Sesión de " + user);
-        
-        setSize(577,428);
+
+        setSize(577, 428);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+
         //Evita que se cierre todo el programa cuando esta ventana se cierre
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
+
         //Clase ImageIcon que permite asignar una imagen a un jLabel con la ruta en: ("")
         ImageIcon fondo = new ImageIcon("src/images/fondo unexac.jpg");
         //Clase Icon para reescalar la imagen a las coordenadas de la interfaz
@@ -47,9 +48,9 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         //Instruccion necesaria para aplicar los cambios
         this.repaint();
     }
-    
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/iconounex.png"));
         return retValue;
     }
@@ -191,40 +192,62 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int estatusInt,validacion = 0;
-        String nombre,apellido,cedula,password,email,estatusString;
-        
+        int estatusInt, validacion = 0;
+        String nombre, apellido, cedula, password, email, estatusString;
+
         nombre = txt_nombre.getText().trim();
         apellido = txt_apellido.getText().trim();
         cedula = txt_cedula.getText().trim();
         password = txt_password.getText().trim();
         email = txt_email.getText().trim();
-        estatusInt = cmb_estatus.getSelectedIndex()+1;
-         
+        estatusInt = cmb_estatus.getSelectedIndex() + 1;
+
         //CONTINUAR AQUI 27/01/2021
-        if(nombre.equals("")){
+        if (nombre.equals("")) {
             txt_nombre.setBackground(Color.red);
             validacion++;
-        }else {
+        } else if (nombre.contains(" ")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        } else {
             Validador validar = new Validador(nombre);
             validar.ValidarNombre();
-            if(validar.verificado==true){
-                txt_nombre.setBackground(new Color(5,125,203));
-                JOptionPane.showMessageDialog(null, "Verificado nombre" );
-            }else{
+            if (validar.verificado == true) {
+                txt_nombre.setBackground(new Color(5, 125, 203));
+                JOptionPane.showMessageDialog(null, "Verificado nombre");
+            } else {
                 JOptionPane.showMessageDialog(null, "No");
             }
         }
-        
-        if(email.equals("")){
+
+        if (email.equals("")) {
             txt_email.setBackground(Color.red);
             validacion++;
-        }else {
+        } else if (nombre.contains(" ")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        } else {
             Validador validar = new Validador(email);
             validar.ValidarEmail();
-            if(validar.verificado==true){
-                JOptionPane.showMessageDialog(null, "Verificado email" );
-            }else{
+            if (validar.verificado == true) {
+                JOptionPane.showMessageDialog(null, "Verificado email");
+            } else {
+                JOptionPane.showMessageDialog(null, "No");
+            }
+        }
+
+        if (cedula.equals("")) {
+            txt_cedula.setBackground(Color.red);
+            validacion++;
+        } else if (nombre.contains(" ")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        } else {
+            Validador validar = new Validador(cedula);
+            validar.ValidarCedula();
+            if (validar.verificado == true) {
+                JOptionPane.showMessageDialog(null, "Verificado cédula");
+            } else {
                 JOptionPane.showMessageDialog(null, "No");
             }
         }

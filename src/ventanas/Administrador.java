@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package ventanas;
+
 import java.sql.*;
 import clases.Conexion;
 import java.awt.Image;
@@ -18,11 +19,11 @@ import javax.swing.WindowConstants;
  * @author Manuel
  */
 public class Administrador extends javax.swing.JFrame {
-    
+
     String user;
     public static int sesion_usuario;
     public static String nombre_usuario = "";
-    
+
     /**
      * Creates new form Administrador
      */
@@ -31,14 +32,14 @@ public class Administrador extends javax.swing.JFrame {
         user = Login.user;
         //variable bandera
         sesion_usuario = 1;
-        
+
         setSize(650, 500);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+
         //Cierra los procesos en segundo plano
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
+
         //Clase ImageIcon que permite asignar una imagen a un jLabel con la ruta en: ("")
         ImageIcon fondo = new ImageIcon("src/images/fondo unexac.jpg");
         //Clase Icon para reescalar la imagen a las coordenadas de la interfaz
@@ -47,28 +48,28 @@ public class Administrador extends javax.swing.JFrame {
         jLabel_fondo.setIcon(icono_fondo);
         //Instruccion necesaria para aplicar los cambios
         this.repaint();
-        
+
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                "select nombre from administradores where email = '" + user + "'");
+                    "select nombre from administradores where email = '" + user + "'");
             ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 nombre_usuario = rs.getString("nombre");
                 setTitle("Administrador - Sesión de " + nombre_usuario);
-                jLabel_NombreUsuario.setText("Bienvenido "+nombre_usuario);
-            }else{
-                
+                jLabel_NombreUsuario.setText("Bienvenido " + nombre_usuario);
+            } else {
+
             }
         } catch (SQLException e) {
             System.err.println("Error en conexión desde la interfaz Administrador");
         }
-        
+
     }
-    
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/iconounex.png"));
         return retValue;
     }

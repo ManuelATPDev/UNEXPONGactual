@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class Login extends javax.swing.JFrame {
-    
+
     //variable para enviar datos entre interfaces
     public static String user = "";
     String pass = "";
@@ -31,14 +31,14 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         //Metodo para asignar el tamaño a la interfaz
-        setSize(400,550);
+        setSize(400, 550);
         //Metodo para evitar que el usuario cambie el tamaño de la interfaz
         setResizable(false);
         //Metodo para asignarle el titulo a la interfaz
         setTitle("Acceso al sistema de la UNEXPO LCM");
         //Metodo para que la interfaz aparazca en el centro de la pantalla
         setLocationRelativeTo(null);
-        
+
         //Clase ImageIcon que permite asignar una imagen a un jLabel con la ruta en: ("")
         ImageIcon fondo = new ImageIcon("src/images/FondoPrincipal.jpg");
         //Clase Icon para reescalar la imagen a las coordenadas de la interfaz
@@ -47,16 +47,16 @@ public class Login extends javax.swing.JFrame {
         jLabel_fondo.setIcon(icono_fondo);
         //Instruccion necesaria para aplicar los cambios
         this.repaint();
-        
+
         ImageIcon logo = new ImageIcon("src/images/logounex.png");
         Icon icono_logo = new ImageIcon(logo.getImage().getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_DEFAULT));
         jLabel_logo.setIcon(icono_logo);
         this.repaint();
     }
-    
+
     //Sobrescribimos el metodo Image para cambiar el icono a la interfaz
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/iconounex.png"));
         return retValue;
     }
@@ -142,69 +142,66 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_usuarioActionPerformed
 
     private void jButton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_accederActionPerformed
-        
+
         user = txt_usuario.getText().trim();
         pass = txt_password.getText().trim();
-        
-        if(!user.equals("") && !pass.equals("")){
+
+        if (!user.equals("") && !pass.equals("")) {
 
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
-                    "select estatus from administradores where email = '" + user
+                        "select estatus from administradores where email = '" + user
                         + "' and password = '" + pass + "'");
-                
+
                 ResultSet rs = pst.executeQuery();
-                
+
                 PreparedStatement pst2 = cn.prepareStatement(
-                    "select estatus from alumnos where email = '" + user
+                        "select estatus from alumnos where email = '" + user
                         + "' and password = '" + pass + "'");
-                
+
                 ResultSet rs2 = pst2.executeQuery();
-                
-                if(rs.next()){
-                    
+
+                if (rs.next()) {
+
                     String estatus = rs.getString("estatus");
-                    
-                    if(estatus.equalsIgnoreCase("Activo")){
+
+                    if (estatus.equalsIgnoreCase("Activo")) {
                         //Metodo para cerrar la interfaz de Login
                         dispose();
                         new Administrador().setVisible(true);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Actualmente se encuentra inactivo, por favor comuniquese con un administrador.");
                         txt_usuario.setText("");
                         txt_password.setText("");
                     }
-                    
-                    
-                }else if(rs2.next()){
+
+                } else if (rs2.next()) {
                     String estatus = rs2.getString("estatus");
-                    
-                    if(estatus.equalsIgnoreCase("Activo")){
+
+                    if (estatus.equalsIgnoreCase("Activo")) {
                         //Metodo para cerrar la interfaz de Login
                         dispose();
                         new Alumno().setVisible(true);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Actualmente se encuentra inactivo, por favor comuniquese con un administrador.");
                         txt_usuario.setText("");
                         txt_password.setText("");
                     }
-                
-                }else {
+
+                } else {
                     JOptionPane.showMessageDialog(null, "¡Error al iniciar sesion!, contacte con un administrador.");
                     txt_usuario.setText("");
                     txt_password.setText("");
                 }
-                
-                
-                
+
             } catch (SQLException e) {
-                System.err.println("Error en el boton Acceder. "+e);
+                System.err.println("Error en el boton Acceder. " + e);
                 JOptionPane.showMessageDialog(null, "¡Error al iniciar sesion!, contacte con un administrador.");
 
             }
-            
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Debes ingresar un correo y contraseña");
         }
 
