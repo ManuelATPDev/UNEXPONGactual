@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.sql.*;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -22,7 +23,8 @@ import javax.swing.WindowConstants;
  */
 public class RegistrarAdministradores extends javax.swing.JFrame {
 
-    String user, nombre_usuario;
+    String user;
+    String[] user2;
 
     /**
      * Creates new form RegistrarAdministradores
@@ -30,7 +32,8 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
     public RegistrarAdministradores() {
         initComponents();
         user = Administrador.nombre_usuario;
-        setTitle("Registrar Administrador - Sesión de " + user);
+        user2 = user.split(" ");
+        setTitle("Registrar Administrador - Sesión de " + user2[0]);
 
         setSize(577, 428);
         setResizable(false);
@@ -207,9 +210,6 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         if (nombre.equals("")) {
             txt_nombre.setBackground(Color.red);
             validacion++;
-        } else if (nombre.contains(" ")) {
-            txt_nombre.setBackground(Color.red);
-            validacion++;
         } else {
             Validador validar = new Validador(nombre);
             validar.ValidarNombre();
@@ -223,9 +223,6 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
 
         //Validacion APELLIDO
         if (apellido.equals("")) {
-            txt_apellido.setBackground(Color.red);
-            validacion++;
-        } else if (apellido.contains(" ")) {
             txt_apellido.setBackground(Color.red);
             validacion++;
         } else {
@@ -243,7 +240,7 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         if (email.equals("")) {
             txt_email.setBackground(Color.red);
             validacion++;
-        } else if (nombre.contains(" ")) {
+        } else if (email.contains(" ")) {
             txt_email.setBackground(Color.red);
             validacion++;
         } else {

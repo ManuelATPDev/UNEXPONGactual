@@ -21,6 +21,7 @@ import javax.swing.WindowConstants;
 public class Administrador extends javax.swing.JFrame {
 
     String user;
+    String[] user2;
     public static int sesion_usuario;
     public static String nombre_usuario = "";
 
@@ -57,8 +58,9 @@ public class Administrador extends javax.swing.JFrame {
 
             if (rs.next()) {
                 nombre_usuario = rs.getString("nombre");
-                setTitle("Administrador - Sesión de " + nombre_usuario);
-                jLabel_NombreUsuario.setText("Bienvenido " + nombre_usuario);
+                user2 = nombre_usuario.split(" ");
+                setTitle("Administrador - Sesión de " + user2[0]);
+                jLabel_NombreUsuario.setText("Bienvenido " + user2[0]);
             } else {
 
             }

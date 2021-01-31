@@ -80,15 +80,24 @@ public class Validador {
                     acceso++;
                 }
             }
+
+            /**
+             * Se comprueba que la cadena de caracteres en la variable "nombre"
+             * solo contenga 1 espacio de separación.
+             */
+            if (nombre.substring(i, i + 1).equals(" ")) {
+                acceso2++;
+            }
         }
 
         /**
          * Se comprueba que la variable acceso haya aumentado tantas veces como
          * caracteres tiene la variable "nombre" para saber que cada uno si
-         * pertenece al grupo de caracteres en el vector "caracter[]" y se envia
-         * la variable verificado a las vistas "Registro".
+         * pertenece al grupo de caracteres en el vector "caracter[]" y que solo
+         * tengan 1 espacio de separación y se envia la variable verificado a
+         * las vistas "Registro".
          */
-        if (acceso == nombre.length()) {
+        if (acceso == (nombre.length() - 1) && acceso2 >= 1) {
             verificado = true;
         } else {
             verificado = false;

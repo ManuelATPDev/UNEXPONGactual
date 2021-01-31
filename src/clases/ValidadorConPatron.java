@@ -36,9 +36,11 @@ public class ValidadorConPatron {
          * [_A-Za-zÁÉÍÓÚáéíóúñÑ]+ = La cadena de caracteres debe contar con las
          * letras A hasta la Z "A-Za-z"(minusculas o mayusculas) o también
          * letras con acentos y la letra ñ "ÁÉÍÓÚáéíóúñÑ" repetidos 1 o más
-         * veces "+"
+         * veces "+" y seguido de un espacio "\\s" junto a otras letas desde la
+         * A hasta la Z "A-Za-z"(minusculas o mayusculas) o también letras con
+         * acentos y la letra ñ "ÁÉÍÓÚáéíóúñÑ" repetidos 1 o más veces "+"
          */
-        this.patronpalabra = Pattern.compile("[A-Za-zÁÉÍÓÚáéíóúñÑ]+");
+        this.patronpalabra = Pattern.compile("[A-Za-zÁÉÍÓÚáéíóúñÑ]+(\\s[A-Za-zÁÉÍÓÚáéíóúñÑ]+)+");
 
         /**
          * Este metodo sirve para almacenar en la variable "comprobarpalabra" si
