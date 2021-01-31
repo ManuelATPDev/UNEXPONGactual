@@ -328,7 +328,7 @@ public class Validador {
              * de caracteres "cedula" sea mayor o igual que 8 para saber que
              * tiene 8 o más caracteres.
              */
-            if (email.substring(i, i + 1).equals("V") || email.substring(i, i + 1).equals("E") && email.substring(i + 1, i + 2).equals("-") && email.length() >= 10) {
+            if (email.substring(i, i + 1).equals("V") || email.substring(i, i + 1).equals("E") && email.substring(i + 1, i + 2).equals("-") && email.length() >= 9) {
 
                 /**
                  * Se recorre, ".substring", la cadena de caracteres que se
@@ -358,7 +358,6 @@ public class Validador {
             } else {
                 acceso2--;
             }
-            System.out.println(acceso2);
 
             /**
              * Se comprueba que la variable acceso2 haya aumentado 10 o más
@@ -366,7 +365,7 @@ public class Validador {
              * carácteres (Contando V- o E-) y se envia la variable verificado a
              * las vistas "Registro".
              */
-            if (acceso2 >= 10) {
+            if (acceso2 >= 9) {
                 verificado = true;
             } else {
                 verificado = false;
@@ -407,7 +406,6 @@ public class Validador {
             }
         }
 
-        System.out.println(acceso);
         /**
          * Se comprueba que la variable acceso haya aumentado 9 o más veces como
          * para saber que cada uno si pertenece al grupo de caracteres en el

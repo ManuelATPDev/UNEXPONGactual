@@ -192,8 +192,9 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int estatusInt, validacion = 0;
-        String nombre, apellido, cedula, password, email, estatusString;
+        int estatusInt;
+        int validacion = 0;
+        String nombre, apellido, cedula, password, email, estatusString = "";
 
         nombre = txt_nombre.getText().trim();
         apellido = txt_apellido.getText().trim();
@@ -202,7 +203,7 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         email = txt_email.getText().trim();
         estatusInt = cmb_estatus.getSelectedIndex() + 1;
 
-        //CONTINUAR AQUI 27/01/2021
+        //Validacion NOMBRE
         if (nombre.equals("")) {
             txt_nombre.setBackground(Color.red);
             validacion++;
@@ -214,42 +215,132 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
             validar.ValidarNombre();
             if (validar.verificado == true) {
                 txt_nombre.setBackground(new Color(5, 125, 203));
-                JOptionPane.showMessageDialog(null, "Verificado nombre");
             } else {
+                validacion++;
                 JOptionPane.showMessageDialog(null, "No");
             }
         }
 
+        //Validacion APELLIDO
+        if (apellido.equals("")) {
+            txt_apellido.setBackground(Color.red);
+            validacion++;
+        } else if (apellido.contains(" ")) {
+            txt_apellido.setBackground(Color.red);
+            validacion++;
+        } else {
+            Validador validar = new Validador(apellido);
+            validar.ValidarNombre();
+            if (validar.verificado == true) {
+                txt_apellido.setBackground(new Color(5, 125, 203));
+            } else {
+                validacion++;
+                JOptionPane.showMessageDialog(null, "No");
+            }
+        }
+
+        //Validacion EMAIL
         if (email.equals("")) {
             txt_email.setBackground(Color.red);
             validacion++;
         } else if (nombre.contains(" ")) {
-            txt_nombre.setBackground(Color.red);
+            txt_email.setBackground(Color.red);
             validacion++;
         } else {
             Validador validar = new Validador(email);
             validar.ValidarEmail();
             if (validar.verificado == true) {
-                JOptionPane.showMessageDialog(null, "Verificado email");
+                txt_email.setBackground(new Color(5, 125, 203));
             } else {
+                validacion++;
                 JOptionPane.showMessageDialog(null, "No");
             }
         }
 
+        //Validacion CEDULA
         if (cedula.equals("")) {
             txt_cedula.setBackground(Color.red);
             validacion++;
-        } else if (nombre.contains(" ")) {
-            txt_nombre.setBackground(Color.red);
+        } else if (cedula.contains(" ")) {
+            txt_cedula.setBackground(Color.red);
             validacion++;
         } else {
             Validador validar = new Validador(cedula);
             validar.ValidarCedula();
             if (validar.verificado == true) {
-                JOptionPane.showMessageDialog(null, "Verificado cédula");
+                txt_cedula.setBackground(new Color(5, 125, 203));
             } else {
+                validacion++;
                 JOptionPane.showMessageDialog(null, "No");
             }
+        }
+
+        //Validacion PASSWORD
+        if (password.equals("")) {
+            txt_password.setBackground(Color.red);
+            validacion++;
+        } else if (password.contains(" ")) {
+            txt_password.setBackground(Color.red);
+            validacion++;
+        } else {
+            txt_password.setBackground(new Color(5, 125, 203));
+        }
+
+        //Validacion ESTATUS
+        if (estatusInt == 1) {
+            estatusString = "Activo";
+        } else if (estatusInt == 2) {
+            estatusString = "Inactivo";
+        }
+
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "select cedula from administradores where cedula = '" + cedula + "'");
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                txt_cedula.setBackground(Color.red);
+                JOptionPane.showMessageDialog(null, "El número de cedula ya pertenece a un administrador");
+                cn.close();
+            } else {
+                cn.close();
+
+                if (validacion == 0) {
+                    try {
+
+                        Connection cn2 = Conexion.conectar();
+                        PreparedStatement pst2 = cn2.prepareStatement(
+                                "insert into administradores values (?,?,?,?,?,?,?,?)");
+                        pst2.setInt(1, 0); //Columna ID
+                        pst2.setString(2, nombre);
+                        pst2.setString(3, apellido);
+                        pst2.setString(4, cedula);
+                        pst2.setString(5, email);
+                        pst2.setString(6, password);
+                        pst2.setString(7, estatusString);
+                        pst2.setString(8, user);
+
+                        pst2.executeUpdate();
+                        cn2.close();
+
+                        Limpiar();
+                        Verificado();
+
+                        JOptionPane.showMessageDialog(null, "Registro de nuevo administrador exitoso.");
+                        this.dispose(); //Sirve para liberar recursos cerrando la pestaña de vista
+
+                    } catch (Exception e) {
+                        System.err.println("Error al registrar administrador " + e);
+                        JOptionPane.showMessageDialog(null, "!ERROR al registrar administrador!, contacte con un administrador.!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error en validar la cedula del administrador" + e);
+            JOptionPane.showMessageDialog(null, "Error al comparar cédula, por favor contacte con un administrador");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -306,4 +397,21 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JPasswordField txt_password;
     // End of variables declaration//GEN-END:variables
+
+    public void Limpiar() {
+        txt_nombre.setText("");
+        txt_apellido.setText("");
+        txt_cedula.setText("");
+        txt_email.setText("");
+        txt_password.setText("");
+        cmb_estatus.setSelectedIndex(0);
+    }
+
+    public void Verificado() {
+        txt_nombre.setBackground(Color.green);
+        txt_apellido.setBackground(Color.green);
+        txt_cedula.setBackground(Color.green);
+        txt_email.setBackground(Color.green);
+        txt_password.setBackground(Color.green);
+    }
 }
