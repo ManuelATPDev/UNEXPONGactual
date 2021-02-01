@@ -18,8 +18,7 @@ public class EncriptarPassword {
     public EncriptarPassword(String password) {
         this.password = password;
         this.encriptacion = "";
-        this.encriptacion = "";
-        this.secretKey = "$omosUn1v3r51d4d3xp3r1m3n741P01173cn1c44n70n10J053d35ucr30Nu3130Gu4r3n4$";
+        this.desencriptacion = "";
     }
 
     public String encode() {
