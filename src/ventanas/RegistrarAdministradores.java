@@ -6,6 +6,7 @@
 package ventanas;
 
 import clases.Validador;
+import clases.EncriptarPassword;
 import clases.Conexion;
 import java.awt.Color;
 import java.sql.*;
@@ -96,7 +97,7 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Nombre:");
+        jLabel2.setText("Nombres:");
         jLabel2.setToolTipText("");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
@@ -110,7 +111,7 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Apellido:");
+        jLabel3.setText("Apellidos:");
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
@@ -197,7 +198,7 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int estatusInt;
         int validacion = 0;
-        String nombre, apellido, cedula, password, email, estatusString = "";
+        String nombre, apellido, cedula, password, passwordencode = "", email, estatusString = "";
 
         nombre = txt_nombre.getText().trim();
         apellido = txt_apellido.getText().trim();
@@ -280,6 +281,12 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
             txt_password.setBackground(Color.red);
             validacion++;
         } else {
+            EncriptarPassword passwordencriptada = new EncriptarPassword(password);
+            passwordencriptada.encode();
+            passwordencode = passwordencriptada.encriptacion.trim();
+            if (passwordencode.equals("")) {
+                validacion++;
+            }
             txt_password.setBackground(new Color(5, 125, 203));
         }
 
@@ -314,7 +321,7 @@ public class RegistrarAdministradores extends javax.swing.JFrame {
                         pst2.setString(3, apellido);
                         pst2.setString(4, cedula);
                         pst2.setString(5, email);
-                        pst2.setString(6, password);
+                        pst2.setString(6, passwordencode);
                         pst2.setString(7, estatusString);
                         pst2.setString(8, user);
 

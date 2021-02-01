@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import clases.EncriptarPassword;
 //Libreria para la clase Icon que permite
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -24,6 +25,7 @@ public class Login extends javax.swing.JFrame {
     //variable para enviar datos entre interfaces
     public static String user = "";
     String pass = "";
+    String passencode = "";
 
     /**
      * Creates new form Login
@@ -145,6 +147,9 @@ public class Login extends javax.swing.JFrame {
 
         user = txt_usuario.getText().trim();
         pass = txt_password.getText().trim();
+        EncriptarPassword passwordencriptada = new EncriptarPassword(pass);
+        passwordencriptada.encode();
+        passencode = passwordencriptada.encriptacion.trim();
 
         if (!user.equals("") && !pass.equals("")) {
 
@@ -152,13 +157,13 @@ public class Login extends javax.swing.JFrame {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
                         "select estatus from administradores where email = '" + user
-                        + "' and password = '" + pass + "'");
+                        + "' and password = '" + passencode + "'");
 
                 ResultSet rs = pst.executeQuery();
 
                 PreparedStatement pst2 = cn.prepareStatement(
                         "select estatus from alumnos where email = '" + user
-                        + "' and password = '" + pass + "'");
+                        + "' and password = '" + passencode + "'");
 
                 ResultSet rs2 = pst2.executeQuery();
 
