@@ -130,6 +130,11 @@ public class Administrador extends javax.swing.JFrame {
 
         jButton_GestionarAdministradores.setBackground(new java.awt.Color(255, 255, 255));
         jButton_GestionarAdministradores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gestionaradmin.png"))); // NOI18N
+        jButton_GestionarAdministradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GestionarAdministradoresActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_GestionarAdministradores, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 140, 140));
 
         jButton_GestionarAlumnos.setBackground(new java.awt.Color(255, 255, 255));
@@ -189,6 +194,11 @@ public class Administrador extends javax.swing.JFrame {
         RegistrarAdministradores registraradmin = new RegistrarAdministradores();
         registraradmin.setVisible(true);
     }//GEN-LAST:event_jButton_RegistrarAdministradorActionPerformed
+
+    private void jButton_GestionarAdministradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GestionarAdministradoresActionPerformed
+        GestionarAdministradores gestionaradmin = new GestionarAdministradores();
+        gestionaradmin.setVisible(true);
+    }//GEN-LAST:event_jButton_GestionarAdministradoresActionPerformed
 
     /**
      * @param args the command line arguments

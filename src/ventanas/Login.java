@@ -21,14 +21,14 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class Login extends javax.swing.JFrame {
-
+    
     //variable para enviar datos entre interfaces
     public static String user = "";
     String pass = "";
     String passencode = "";
 
     /**
-     * Creates new form Login
+     * Creates new form nuevo
      */
     public Login() {
         initComponents();
@@ -55,7 +55,7 @@ public class Login extends javax.swing.JFrame {
         jLabel_logo.setIcon(icono_logo);
         this.repaint();
     }
-
+    
     //Sobrescribimos el metodo Image para cambiar el icono a la interfaz
     @Override
     public Image getIconImage() {
@@ -80,7 +80,6 @@ public class Login extends javax.swing.JFrame {
         jLabel_fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 290, 270));
 
@@ -98,7 +97,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 330, 210, -1));
-        txt_usuario.getAccessibleContext().setAccessibleName("");
 
         txt_password.setBackground(new java.awt.Color(5, 125, 203));
         txt_password.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -126,7 +124,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton_acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 420, 210, 35));
-        jButton_acceder.getAccessibleContext().setAccessibleName("");
 
         jLabel_footer.setText("Creado por Manuel Torrealba y Stefany Villamizar");
         getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, -1, -1));
@@ -135,13 +132,13 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
-
     private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_usuarioActionPerformed
+
+    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_passwordActionPerformed
 
     private void jButton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_accederActionPerformed
 
@@ -156,14 +153,14 @@ public class Login extends javax.swing.JFrame {
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
-                        "select estatus from administradores where email = '" + user
-                        + "' and password = '" + passencode + "'");
+                    "select estatus from administradores where email = '" + user
+                    + "' and password = '" + passencode + "'");
 
                 ResultSet rs = pst.executeQuery();
 
                 PreparedStatement pst2 = cn.prepareStatement(
-                        "select estatus from alumnos where email = '" + user
-                        + "' and password = '" + passencode + "'");
+                    "select estatus from alumnos where email = '" + user
+                    + "' and password = '" + passencode + "'");
 
                 ResultSet rs2 = pst2.executeQuery();
 
@@ -209,7 +206,6 @@ public class Login extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Debes ingresar un correo y contraseña");
         }
-
     }//GEN-LAST:event_jButton_accederActionPerformed
 
     /**
@@ -237,6 +233,7 @@ public class Login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
