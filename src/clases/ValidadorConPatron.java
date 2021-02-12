@@ -108,9 +108,9 @@ public class ValidadorConPatron {
         /**
          * [0-9]{9,}$ = Forzosamente la cadena de caracteres debe contener
          * numeros del 0 al 9 "[0-9]" y la cadena de caracteres debe contener
-         * mínimo 9 numeros "{9,}"
+         * mínimo 8 numeros "{8,}"
          */
-        this.patronexpediente = Pattern.compile("[0-9]{9,}");
+        this.patronexpediente = Pattern.compile("[0-9]{8,}");
 
         /**
          * Este metodo sirve para almacenar en la variable "comprobarexpediente"

@@ -22,18 +22,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Manuel
  */
-public class GestionarAdministradores extends javax.swing.JFrame {
+public class GestionarAlumnos extends javax.swing.JFrame {
 
     String user;
     String[] user2;
-    public static String user_update = "";
+    public static String user_update = "", especialidad_update = "";
     public static int ID_update;
     DefaultTableModel model = new DefaultTableModel(); //Acceso a los métodos necesarios para modificar una tabla
 
     /**
      * Creates new form GestionarAdministradores
      */
-    public GestionarAdministradores() {
+    public GestionarAlumnos() {
         initComponents();
         user = Administrador.nombre_usuario;
         user2 = user.split(" ");
@@ -56,7 +56,7 @@ public class GestionarAdministradores extends javax.swing.JFrame {
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select id, nombres, apellidos, cedula, email, estatus, registrado_por from administradores");
+                    "select id, nombres, apellidos, cedula, expediente, especialidad, email, estatus, registrado_por from alumnos");
 
             ResultSet rs = pst.executeQuery();
 
@@ -67,14 +67,16 @@ public class GestionarAdministradores extends javax.swing.JFrame {
             model.addColumn("Nombres");
             model.addColumn("Apellidos");
             model.addColumn("Cédula");
+            model.addColumn("Expediente");
+            model.addColumn("Especialidad");
             model.addColumn("Correo Electrónico");
             model.addColumn("Estatus");
             model.addColumn("Registrado por");
 
             while (rs.next()) {
-                Object[] fila = new Object[7];
+                Object[] fila = new Object[9];
 
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 9; i++) {
                     fila[i] = rs.getObject(i + 1);
                     jTable_administradores.setDefaultEditor(model.getColumnClass(i), null);
                 }
@@ -93,13 +95,14 @@ public class GestionarAdministradores extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila_point = jTable_administradores.rowAtPoint(e.getPoint());
-                int columna_point = 1, columna_point2 = 0;
-                
+                int columna_point = 1, columna_point2 = 0, columna_point3 = 5;
+
                 if (fila_point >= 0 && columna_point >= 0 && e.getClickCount() == 2) {
-                    user_update = (String)model.getValueAt(fila_point, columna_point);
-                    ID_update = ((Long)model.getValueAt(fila_point, columna_point2)).intValue();
-                    InformacionAdministradores informacionadmin = new InformacionAdministradores();
-                    informacionadmin.setVisible(true);
+                    user_update = (String) model.getValueAt(fila_point, columna_point);
+                    ID_update = ((Long) model.getValueAt(fila_point, columna_point2)).intValue();
+                    especialidad_update = (String)model.getValueAt(fila_point, columna_point3);
+                    InformacionAlumnos informacionalum = new InformacionAlumnos();
+                    informacionalum.setVisible(true);
                 }
             }
 
@@ -134,8 +137,8 @@ public class GestionarAdministradores extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestionar Administradores");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, -1));
+        jLabel1.setText("Gestionar Alumnos");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, -1, -1));
 
         jTable_administradores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,20 +179,21 @@ public class GestionarAdministradores extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GestionarAdministradores().setVisible(true);
+                new GestionarAlumnos().setVisible(true);
             }
         });
     }

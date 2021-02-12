@@ -4,17 +4,16 @@
  * and open the template in the editor.
  */
 package ventanas;
-
-import clases.EncriptarPassword;
 //Libreria para la clase Icon que permite
+
+import java.sql.*;
+import clases.EncriptarPassword;
+import clases.Conexion;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.Icon;
-//Libreria para la clase ImageIcon que permite 
 import javax.swing.ImageIcon;
-import java.sql.*;
-import clases.Conexion;
-import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
@@ -25,7 +24,7 @@ import javax.swing.WindowConstants;
 public class ModificarPassword extends javax.swing.JFrame {
 
     String user, user_update;
-    int ID_update;
+    int ID_update, ID_pestaña;
     String[] user2, user3;
 
     /**
@@ -33,8 +32,14 @@ public class ModificarPassword extends javax.swing.JFrame {
      */
     public ModificarPassword() {
         initComponents();
+        ID_pestaña = InformacionAdministradores.ID_pestaña;
         user = Login.user;
-        user_update = GestionarAdministradores.user_update;
+        if(ID_pestaña == 1){
+            user_update = GestionarAdministradores.user_update;
+        } else{
+            user_update = GestionarAlumnos.user_update;
+        }
+        
         user2 = user.split(" ");
         user3 = user_update.split(" ");
 
@@ -86,6 +91,7 @@ public class ModificarPassword extends javax.swing.JFrame {
         jLabel_fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -182,11 +188,29 @@ public class ModificarPassword extends javax.swing.JFrame {
 
         if (validacion == 0) {
             if (passwordencode.equals(passwordencode2)) {
-                try {
-                    ID_update = GestionarAdministradores.ID_update;
+                if (ID_pestaña == 1) {
+                    try {
+                        ID_update = GestionarAdministradores.ID_update;
+                        Connection cn = Conexion.conectar();
+                        PreparedStatement pst = cn.prepareStatement(
+                                "update administradores set password = ? where id = " + ID_update);
+                        pst.setString(1, passwordencode);
+
+                        pst.executeUpdate();
+                        cn.close();
+                        Limpiar();
+                        Verificado();
+                        this.dispose();
+                    } catch (SQLException e) {
+                        System.err.println("Ha ocurrido un error al actualizar la contraseña. Contacte con un administrador " + e);
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la contraseña. Contacte con un administrador");
+                    }
+                } else{
+                    try {
+                    ID_update = GestionarAlumnos.ID_update;
                     Connection cn = Conexion.conectar();
                     PreparedStatement pst = cn.prepareStatement(
-                            "update administradores set password = ? where id = " + ID_update);
+                            "update alumnos set password = ? where id = " + ID_update);
                     pst.setString(1, passwordencode);
 
                     pst.executeUpdate();
@@ -197,6 +221,7 @@ public class ModificarPassword extends javax.swing.JFrame {
                 } catch (SQLException e) {
                     System.err.println("Ha ocurrido un error al actualizar la contraseña. Contacte con un administrador " + e);
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar la contraseña. Contacte con un administrador");
+                }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Las contraseñas deben coincidir");
@@ -251,6 +276,8 @@ public class ModificarPassword extends javax.swing.JFrame {
     }
 
     private void Verificado() {
+        txt_password.setBackground(Color.green);
+        txt_password2.setBackground(Color.green);
         JOptionPane.showMessageDialog(null, "La contraseña ha sido actualizada correctamente");
     }
 

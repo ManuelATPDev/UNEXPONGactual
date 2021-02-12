@@ -22,29 +22,21 @@ import javax.swing.WindowConstants;
  *
  * @author Manuel
  */
-public class InformacionAdministradores extends javax.swing.JFrame {
+public class RegistrarAlumnos extends javax.swing.JFrame {
 
-    String user, user_update;
-    int ID_update;
-    public static int ID_pestaña;
-    String[] user2, user3;
+    String user;
+    String[] user2;
 
     /**
      * Creates new form RegistrarAdministradores
      */
-    public InformacionAdministradores() {
+    public RegistrarAlumnos() {
         initComponents();
-        ID_pestaña = 1;
         user = Administrador.nombre_usuario;
         user2 = user.split(" ");
-        user_update = GestionarAdministradores.user_update;
-        user3 = user_update.split(" ");
-        ID_update = GestionarAdministradores.ID_update;
-        
-        setTitle("Información del administrador(a): " + user3[0] +" - Sesión de " + user2[0]);
-        jLabel_Titulo.setText("Información del administrador(a): "+user3[0]);
+        setTitle("Registrar Alumno - Sesión de " + user2[0]);
 
-        setSize(580, 490);
+        setSize(577, 538);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -59,29 +51,6 @@ public class InformacionAdministradores extends javax.swing.JFrame {
         jLabel_fondo.setIcon(icono_fondo);
         //Instruccion necesaria para aplicar los cambios
         this.repaint();
-        try {
-            Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement(
-                "select nombres, apellidos, cedula, email, estatus, registrado_por from administradores where id = "+ID_update);
-            ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
-                txt_nombre.setText(rs.getString("nombres"));
-                txt_apellido.setText(rs.getString("apellidos"));
-                txt_email.setText(rs.getString("email"));
-                txt_cedula.setText(rs.getString("cedula"));
-                if(rs.getString("estatus").equals("Activo")){
-                    cmb_estatus.setSelectedIndex(0);
-                }else{
-                    cmb_estatus.setSelectedIndex(1);
-                }
-                txt_registrado_por.setText(rs.getString("registrado_por"));
-            }
-            cn.close();
-        } catch (SQLException e) {
-            System.err.println("Ha ocurrido un error al consultar el administrador. Contacte con un administrador "+e);
-            JOptionPane.showMessageDialog(null, "Ha acurrido un error al consultar");
-        }
     }
 
     @Override
@@ -99,7 +68,7 @@ public class InformacionAdministradores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel_Titulo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -109,22 +78,27 @@ public class InformacionAdministradores extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txt_cedula = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        cmb_estatus = new javax.swing.JComboBox<>();
+        txt_password = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
-        txt_registrado_por = new javax.swing.JTextField();
+        txt_expediente = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cmb_estatus = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        cmb_especialidad = new javax.swing.JComboBox<>();
         jLabel_footer = new javax.swing.JLabel();
-        jButton_Actualizar = new javax.swing.JButton();
-        jButton_Password = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel_fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
+        setMinimumSize(new java.awt.Dimension(580, 500));
+        setPreferredSize(new java.awt.Dimension(580, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel_Titulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel_Titulo.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_Titulo.setText("Información del administrador: ");
-        getContentPane().add(jLabel_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Registro de Alumnos");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -185,69 +159,88 @@ public class InformacionAdministradores extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Estatus:");
+        jLabel6.setText("Contraseña:");
         jLabel6.setToolTipText("");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, -1, -1));
+
+        txt_password.setBackground(new java.awt.Color(5, 125, 203));
+        txt_password.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_password.setForeground(new java.awt.Color(255, 255, 255));
+        txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 150, -1));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Expediente:");
+        jLabel7.setToolTipText("");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, -1));
+
+        txt_expediente.setBackground(new java.awt.Color(5, 125, 203));
+        txt_expediente.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_expediente.setForeground(new java.awt.Color(255, 255, 255));
+        txt_expediente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_expediente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(txt_expediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 150, -1));
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Estatus:");
+        jLabel8.setToolTipText("");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
         cmb_estatus.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         cmb_estatus.setForeground(new java.awt.Color(255, 255, 255));
         cmb_estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
         cmb_estatus.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(cmb_estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 150, -1));
+        getContentPane().add(cmb_estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 150, -1));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Registrado por:");
-        jLabel7.setToolTipText("");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Especialidad:");
+        jLabel9.setToolTipText("");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, -1));
 
-        txt_registrado_por.setEditable(false);
-        txt_registrado_por.setBackground(new java.awt.Color(5, 125, 203));
-        txt_registrado_por.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        txt_registrado_por.setForeground(new java.awt.Color(255, 255, 255));
-        txt_registrado_por.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_registrado_por.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(txt_registrado_por, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 170, -1));
+        cmb_especialidad.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        cmb_especialidad.setForeground(new java.awt.Color(255, 255, 255));
+        cmb_especialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mecatronica", "Sistemas", "Mecanica", "Tsu Mecanica", "Industrial" }));
+        cmb_especialidad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(cmb_especialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 150, -1));
 
         jLabel_footer.setForeground(new java.awt.Color(0, 0, 0));
         jLabel_footer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_footer.setText("Creado por Manuel Torrealba y Stefany Villamizar");
         jLabel_footer.setToolTipText("");
-        getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, -1, -1));
+        getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, -1, -1));
 
-        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizaradministradores-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
-        jButton_Actualizar.setBorder(null);
-        jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/registro-Icon made by dDara from www.flaticon.com.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ActualizarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 90, 80));
-
-        jButton_Password.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizarcontraseña-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
-        jButton_Password.setBorder(null);
-        jButton_Password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_PasswordActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 90, 80));
-        getContentPane().add(jLabel_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 460));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, 90, 80));
+        getContentPane().add(jLabel_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-        int estatusInt;
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int estatusInt, especialidadInt;
         int validacion = 0;
-        String nombre, apellido, cedula, email, estatusString = "";
+        String nombre, apellido, cedula, expediente, password, passwordencode = "", email, estatusString = "", especialidadString = "";
 
         nombre = txt_nombre.getText().trim();
         apellido = txt_apellido.getText().trim();
         cedula = txt_cedula.getText().trim();
+        expediente = txt_expediente.getText().trim();
+        password = txt_password.getText().trim();
         email = txt_email.getText().trim();
         estatusInt = cmb_estatus.getSelectedIndex() + 1;
+        especialidadInt = cmb_especialidad.getSelectedIndex() + 1;
 
         //Validacion NOMBRE
         if (nombre.equals("")) {
@@ -314,6 +307,41 @@ public class InformacionAdministradores extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No");
             }
         }
+        
+        //Validación EXPEDIENTE
+        if(expediente.equals("")){
+            txt_expediente.setBackground(Color.red);
+            validacion++;
+        } else if(expediente.contains(" ")){
+            txt_expediente.setBackground(Color.red);
+            validacion++;
+        } else{
+            Validador validar = new Validador(expediente);
+            validar.ValidarExpediente();
+            if(validar.verificado == true){
+                txt_expediente.setBackground(new Color(5, 125, 203));
+            } else{
+                validacion++;
+                JOptionPane.showMessageDialog(null, "Debe ingresar un expediente valido");
+            }
+        }
+
+        //Validacion PASSWORD
+        if (password.equals("")) {
+            txt_password.setBackground(Color.red);
+            validacion++;
+        } else if (password.contains(" ")) {
+            txt_password.setBackground(Color.red);
+            validacion++;
+        } else {
+            EncriptarPassword passwordencriptada = new EncriptarPassword(password);
+            passwordencriptada.encode();
+            passwordencode = passwordencriptada.encriptacion.trim();
+            if (passwordencode.equals("")) {
+                validacion++;
+            }
+            txt_password.setBackground(new Color(5, 125, 203));
+        }
 
         //Validacion ESTATUS
         if (estatusInt == 1) {
@@ -321,16 +349,35 @@ public class InformacionAdministradores extends javax.swing.JFrame {
         } else if (estatusInt == 2) {
             estatusString = "Inactivo";
         }
+        
+        //Validacion Especialidad
+        switch (especialidadInt){
+            case 1:
+                especialidadString = "Mecatronica";
+                break;
+            case 2: 
+                especialidadString = "Sistemas";
+                break;
+            case 3:
+                especialidadString = "Mecanica";
+                break;
+            case 4:
+                especialidadString = "TSU Mecanica";
+                break;
+            case 5:
+                especialidadString = "Industrial";
+                break;     
+        }
 
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select cedula from administradores where cedula = '" + cedula + "' and not id = "+ID_update);
+                    "select cedula, expediente from alumnos where cedula = '" + cedula + "' AND expediente = '"+ expediente+"'");
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
                 txt_cedula.setBackground(Color.red);
-                JOptionPane.showMessageDialog(null, "El número de cedula ya pertenece a un administrador");
+                JOptionPane.showMessageDialog(null, "El número de cedula y/o expediente ya pertenecen a un alumno");
                 cn.close();
             } else {
                 cn.close();
@@ -340,12 +387,18 @@ public class InformacionAdministradores extends javax.swing.JFrame {
 
                         Connection cn2 = Conexion.conectar();
                         PreparedStatement pst2 = cn2.prepareStatement(
-                                "update administradores set nombres=?, apellidos=?, cedula=?, email=?, estatus=? where id = "+ID_update);pst2.setInt(1, 0); //Columna ID
-                        pst2.setString(1, nombre);
-                        pst2.setString(2, apellido);
-                        pst2.setString(3, cedula);
-                        pst2.setString(4, email);
-                        pst2.setString(5, estatusString);
+                                "insert into alumnos values (?,?,?,?,?,?,?,?,?,?,?)");
+                        pst2.setInt(1, 0); //Columna ID
+                        pst2.setString(2, nombre);
+                        pst2.setString(3, apellido);
+                        pst2.setString(4, cedula);
+                        pst2.setString(5, expediente);
+                        pst2.setString(6, especialidadString);
+                        pst2.setString(7, email);
+                        pst2.setString(8, passwordencode);
+                        pst2.setString(9, "");
+                        pst2.setString(10, estatusString);
+                        pst2.setString(11, user);
 
                         pst2.executeUpdate();
                         cn2.close();
@@ -353,27 +406,22 @@ public class InformacionAdministradores extends javax.swing.JFrame {
                         Limpiar();
                         Verificado();
 
-                        JOptionPane.showMessageDialog(null, "La actualización del administrador(a) fue realizada correctamente");
+                        JOptionPane.showMessageDialog(null, "Registro de nuevo alumno exitoso.");
                         this.dispose(); //Sirve para liberar recursos cerrando la pestaña de vista
 
                     } catch (Exception e) {
-                        System.err.println("Error al actualizar administrador " + e);
-                        JOptionPane.showMessageDialog(null, "!ERROR al actualizar administrador!, contacte con un administrador.!");
+                        System.err.println("Error al registrar alumno " + e);
+                        JOptionPane.showMessageDialog(null, "!ERROR al registrar alumno!, contacte con un administrador.!");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error al validar la cedula del administrador" + e);
+            System.err.println("Error en validar la cedula del alumno" + e);
             JOptionPane.showMessageDialog(null, "Error al comparar cédula, por favor contacte con un administrador");
         }
-    }//GEN-LAST:event_jButton_ActualizarActionPerformed
-
-    private void jButton_PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PasswordActionPerformed
-        ModificarPassword modificarpassword = new ModificarPassword();
-        modificarpassword.setVisible(true);
-    }//GEN-LAST:event_jButton_PasswordActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,59 +440,65 @@ public class InformacionAdministradores extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InformacionAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InformacionAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InformacionAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InformacionAdministradores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InformacionAdministradores().setVisible(true);
+                new RegistrarAlumnos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmb_especialidad;
     private javax.swing.JComboBox<String> cmb_estatus;
-    private javax.swing.JButton jButton_Actualizar;
-    private javax.swing.JButton jButton_Password;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel_Titulo;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_fondo;
     private javax.swing.JLabel jLabel_footer;
     private javax.swing.JTextField txt_apellido;
     private javax.swing.JTextField txt_cedula;
     private javax.swing.JTextField txt_email;
+    private javax.swing.JTextField txt_expediente;
     private javax.swing.JTextField txt_nombre;
-    private javax.swing.JTextField txt_registrado_por;
+    private javax.swing.JPasswordField txt_password;
     // End of variables declaration//GEN-END:variables
 
-    private void Limpiar() {
+    public void Limpiar() {
         txt_nombre.setText("");
         txt_apellido.setText("");
         txt_cedula.setText("");
+        txt_expediente.setText("");
         txt_email.setText("");
+        txt_password.setText("");
         cmb_estatus.setSelectedIndex(0);
+        cmb_especialidad.setSelectedIndex(0);
     }
 
-    private void Verificado() {
+    public void Verificado() {
         txt_nombre.setBackground(Color.green);
         txt_apellido.setBackground(Color.green);
         txt_cedula.setBackground(Color.green);
+        txt_expediente.setBackground(Color.green);
         txt_email.setBackground(Color.green);
+        txt_password.setBackground(Color.green);
     }
 }

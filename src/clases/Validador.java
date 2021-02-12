@@ -416,12 +416,12 @@ public class Validador {
         }
 
         /**
-         * Se comprueba que la variable acceso haya aumentado 9 o más veces como
+         * Se comprueba que la variable acceso haya aumentado 8 o más veces como
          * para saber que cada uno si pertenece al grupo de caracteres en el
          * vector "caracternumeros[]" y se envia la variable verificado a las
          * vistas "Registro".
          */
-        if (acceso >= 9) {
+        if (acceso >= 8) {
             verificado = true;
         } else {
             verificado = false;

@@ -6,40 +6,42 @@
 package ventanas;
 
 import clases.EncriptarPassword;
-//Libreria para la clase Icon que permite
+import java.sql.*;
+import clases.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.Icon;
-//Libreria para la clase ImageIcon que permite 
 import javax.swing.ImageIcon;
-import java.sql.*;
-import clases.Conexion;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 /**
  *
  * @author Manuel
  */
 public class Login extends javax.swing.JFrame {
-    
+
     //variable para enviar datos entre interfaces
     public static String user = "";
     String pass = "";
     String passencode = "";
 
     /**
-     * Creates new form nuevo
+     * Creates new form Administrador
      */
     public Login() {
         initComponents();
         //Metodo para asignar el tamaño a la interfaz
-        setSize(400, 550);
+        setSize(400, 580);
         //Metodo para evitar que el usuario cambie el tamaño de la interfaz
         setResizable(false);
         //Metodo para asignarle el titulo a la interfaz
         setTitle("Acceso al sistema de la UNEXPO LCM");
         //Metodo para que la interfaz aparazca en el centro de la pantalla
         setLocationRelativeTo(null);
+        
+        //Cierra los procesos en segundo plano
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Clase ImageIcon que permite asignar una imagen a un jLabel con la ruta en: ("")
         ImageIcon fondo = new ImageIcon("src/images/FondoPrincipal.jpg");
@@ -55,8 +57,7 @@ public class Login extends javax.swing.JFrame {
         jLabel_logo.setIcon(icono_logo);
         this.repaint();
     }
-    
-    //Sobrescribimos el metodo Image para cambiar el icono a la interfaz
+
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/iconounex.png"));
@@ -72,44 +73,21 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel7 = new javax.swing.JLabel();
         jLabel_logo = new javax.swing.JLabel();
-        txt_usuario = new javax.swing.JTextField();
-        txt_password = new javax.swing.JPasswordField();
         jButton_acceder = new javax.swing.JButton();
-        jLabel_footer = new javax.swing.JLabel();
+        txt_password = new javax.swing.JPasswordField();
+        txt_usuario = new javax.swing.JTextField();
         jLabel_fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Creado por Manuel Torrealba y Stefany Villamizar");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, -1, -1));
         getContentPane().add(jLabel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 290, 270));
-
-        txt_usuario.setBackground(new java.awt.Color(5, 125, 203));
-        txt_usuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txt_usuario.setForeground(new java.awt.Color(255, 255, 255));
-        txt_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_usuario.setToolTipText("Ingrese su correo electrónico");
-        txt_usuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txt_usuario.setName(""); // NOI18N
-        txt_usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_usuarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 330, 210, -1));
-
-        txt_password.setBackground(new java.awt.Color(5, 125, 203));
-        txt_password.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txt_password.setForeground(new java.awt.Color(255, 255, 255));
-        txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_password.setToolTipText("Introduzca su contraseña");
-        txt_password.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passwordActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 370, 210, -1));
 
         jButton_acceder.setBackground(new java.awt.Color(5, 125, 203));
         jButton_acceder.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
@@ -125,20 +103,37 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 420, 210, 35));
 
-        jLabel_footer.setText("Creado por Manuel Torrealba y Stefany Villamizar");
-        getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, -1, -1));
+        txt_password.setBackground(new java.awt.Color(5, 125, 203));
+        txt_password.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txt_password.setForeground(new java.awt.Color(255, 255, 255));
+        txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_password.setToolTipText("Introduzca su contraseña");
+        txt_password.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_passwordActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 370, 210, -1));
+
+        txt_usuario.setBackground(new java.awt.Color(5, 125, 203));
+        txt_usuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txt_usuario.setForeground(new java.awt.Color(255, 255, 255));
+        txt_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_usuario.setToolTipText("Ingrese su correo electrónico");
+        txt_usuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txt_usuario.setName(""); // NOI18N
+        txt_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_usuarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 330, 210, -1));
         getContentPane().add(jLabel_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_usuarioActionPerformed
-
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
 
     private void jButton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_accederActionPerformed
 
@@ -208,6 +203,14 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_accederActionPerformed
 
+    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_passwordActionPerformed
+
+    private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_usuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,10 +238,11 @@ public class Login extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 new Login().setVisible(true);
             }
@@ -247,8 +251,8 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_acceder;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel_fondo;
-    private javax.swing.JLabel jLabel_footer;
     private javax.swing.JLabel jLabel_logo;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_usuario;

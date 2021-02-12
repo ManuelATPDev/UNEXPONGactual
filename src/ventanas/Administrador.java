@@ -53,11 +53,11 @@ public class Administrador extends javax.swing.JFrame {
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select nombre from administradores where email = '" + user + "'");
+                    "select nombres from administradores where email = '" + user + "'");
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                nombre_usuario = rs.getString("nombre");
+                nombre_usuario = rs.getString("nombres");
                 user2 = nombre_usuario.split(" ");
                 setTitle("Administrador - Sesión de " + user2[0]);
                 jLabel_NombreUsuario.setText("Bienvenido " + user2[0]);
@@ -65,7 +65,7 @@ public class Administrador extends javax.swing.JFrame {
 
             }
         } catch (SQLException e) {
-            System.err.println("Error en conexión desde la interfaz Administrador");
+            System.err.println("Error en conexión desde la interfaz Administrador "+e);
         }
 
     }
@@ -122,6 +122,11 @@ public class Administrador extends javax.swing.JFrame {
 
         jButton_RegistrarAlumno.setBackground(new java.awt.Color(255, 255, 255));
         jButton_RegistrarAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addAlumnos.png"))); // NOI18N
+        jButton_RegistrarAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RegistrarAlumnoActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_RegistrarAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 140, 140));
 
         jButton_Materias.setBackground(new java.awt.Color(255, 255, 255));
@@ -139,6 +144,11 @@ public class Administrador extends javax.swing.JFrame {
 
         jButton_GestionarAlumnos.setBackground(new java.awt.Color(255, 255, 255));
         jButton_GestionarAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gestionAlumnos-Icon made by flat Icons from www.flaticon.com.png"))); // NOI18N
+        jButton_GestionarAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GestionarAlumnosActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_GestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 140, 140));
 
         jButton_ImprimirReporte.setBackground(new java.awt.Color(255, 255, 255));
@@ -199,6 +209,16 @@ public class Administrador extends javax.swing.JFrame {
         GestionarAdministradores gestionaradmin = new GestionarAdministradores();
         gestionaradmin.setVisible(true);
     }//GEN-LAST:event_jButton_GestionarAdministradoresActionPerformed
+
+    private void jButton_RegistrarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarAlumnoActionPerformed
+        RegistrarAlumnos registaralum = new RegistrarAlumnos();
+        registaralum.setVisible(true);
+    }//GEN-LAST:event_jButton_RegistrarAlumnoActionPerformed
+
+    private void jButton_GestionarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GestionarAlumnosActionPerformed
+        GestionarAlumnos gestionalum = new GestionarAlumnos();
+        gestionalum.setVisible(true);
+    }//GEN-LAST:event_jButton_GestionarAlumnosActionPerformed
 
     /**
      * @param args the command line arguments
