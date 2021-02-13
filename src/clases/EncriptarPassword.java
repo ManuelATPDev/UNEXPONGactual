@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import org.apache.commons.codec.binary.Base64;
 
 public class EncriptarPassword {
-//Comentarios Stefany<3
+//Hola bebe eres bello uwu
     private String password;
     public String encriptacion;
     public String desencriptacion;
