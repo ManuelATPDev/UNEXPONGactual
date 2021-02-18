@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ventanas;
 
 import clases.Conexion;
 import clases.LlenarComboBox;
+import clases.LlenarJLabel;
 import java.sql.*;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,16 +17,16 @@ import javax.swing.WindowConstants;
  *
  * @author Manuel
  */
-public class ModificarMaterias extends javax.swing.JFrame {
+public class RegistrarMateriasAlumnos extends javax.swing.JFrame {
 
     String materia_codigo = "", materia_nombre = "", materia_seccion = "", user, especialidad_update, materia_modificar = "";
     int ID_update;
     String[] user2;
 
     /**
-     * Creates new form ModificarMaterias
+     * Creates new form RegistrarMateriasAlumnos
      */
-    public ModificarMaterias() {
+    public RegistrarMateriasAlumnos() {
         initComponents();
         materia_codigo = InformacionAlumnos.materia_codigo;
         materia_nombre = InformacionAlumnos.materia_nombre;
@@ -46,7 +43,7 @@ public class ModificarMaterias extends javax.swing.JFrame {
         //Evita que se cierre todo el programa cuando esta ventana se cierre
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        setTitle("Modificar materia - Sesion de " + user2[0]);
+        setTitle("Añadir materia - Sesion de " + user2[0]);
 
         //Clase ImageIcon que permite asignar una imagen a un jLabel con la ruta en: ("")
         ImageIcon fondo = new ImageIcon("src/images/fondo unexac.jpg");
@@ -57,10 +54,7 @@ public class ModificarMaterias extends javax.swing.JFrame {
         //Instruccion necesaria para aplicar los cambios
         this.repaint();
 
-        jLabel_nombre_materia.setText(materia_nombre);
-        jLabel_codigo_materia.setText(materia_codigo);
-        cmb_seccion_materia.setModel(new DefaultComboBoxModel(LlenarComboBox.ComboBoxSeccion(materia_nombre)));
-        cmb_seccion_materia.setSelectedItem(materia_seccion);
+        LlenarComboBox.ComboBoxNombre(cmb_nombre_materia, especialidad_update);
     }
 
     @Override
@@ -80,12 +74,12 @@ public class ModificarMaterias extends javax.swing.JFrame {
 
         jLabel_Titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel_nombre_materia = new javax.swing.JLabel();
+        cmb_nombre_materia = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel_codigo_materia = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cmb_seccion_materia = new javax.swing.JComboBox<>();
-        jButton_Actualizar = new javax.swing.JButton();
+        jButton_Añadir = new javax.swing.JButton();
         jLabel_footer = new javax.swing.JLabel();
         jLabel_fondo = new javax.swing.JLabel();
 
@@ -96,8 +90,8 @@ public class ModificarMaterias extends javax.swing.JFrame {
         jLabel_Titulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel_Titulo.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_Titulo.setText("Modificar Materia:");
-        getContentPane().add(jLabel_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
+        jLabel_Titulo.setText("Añadir Materia:");
+        getContentPane().add(jLabel_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -106,12 +100,12 @@ public class ModificarMaterias extends javax.swing.JFrame {
         jLabel2.setToolTipText("");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, -1, -1));
 
-        jLabel_nombre_materia.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel_nombre_materia.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel_nombre_materia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_nombre_materia.setText("MATERIA");
-        jLabel_nombre_materia.setDoubleBuffered(true);
-        getContentPane().add(jLabel_nombre_materia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 280, 40));
+        cmb_nombre_materia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_nombre_materiaItemStateChanged(evt);
+            }
+        });
+        getContentPane().add(cmb_nombre_materia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 290, 40));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -136,14 +130,14 @@ public class ModificarMaterias extends javax.swing.JFrame {
 
         getContentPane().add(cmb_seccion_materia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 290, 40));
 
-        jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizaradministradores-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
-        jButton_Actualizar.setBorder(null);
-        jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Añadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregarmateria-Icon Icons from www.icon-icons.com.png"))); // NOI18N
+        jButton_Añadir.setBorder(null);
+        jButton_Añadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ActualizarActionPerformed(evt);
+                jButton_AñadirActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 90, 80));
+        getContentPane().add(jButton_Añadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 90, 80));
 
         jLabel_footer.setText("Creado por Manuel Torrealba y Stefany Villamizar");
         getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, -1, -1));
@@ -152,31 +146,28 @@ public class ModificarMaterias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
+    private void jButton_AñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AñadirActionPerformed
         int validacion = 0;
         String[] materia = InformacionAlumnos.materia;
+        String materias_añadir = InformacionAlumnos.materias;
         for (int i = 0; i < materia.length; i++) {
-            if (materia[i].contains(materia_codigo) ) {
-                materia[i] = materia[i].replaceAll(materia_seccion, cmb_seccion_materia.getSelectedItem().toString());
+            if (materia[i].contains(cmb_nombre_materia.getSelectedItem().toString())) {
+                JOptionPane.showMessageDialog(null, "El alumno ya se encuentra en la asignatura introducida");
+                validacion++;
             }
-            materia_modificar += materia[i] + "-";
         }
-        
-        if (materia_seccion.equals(cmb_seccion_materia.getSelectedItem().toString())) {
-            JOptionPane.showMessageDialog(null, "El alumno ya está en la sección indicada");
-            validacion++;
-        }
+        materias_añadir += jLabel_codigo_materia.getText()+","+cmb_nombre_materia.getSelectedItem().toString()+","+cmb_seccion_materia.getSelectedItem()+"-";
 
         if (validacion == 0) {
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement(
                         "UPDATE alumnos set materias_inscritas = ? WHERE id = " + ID_update);
-                pst.setString(1, materia_modificar);
+                pst.setString(1, materias_añadir);
                 pst.executeUpdate();
                 cn.close();
 
-                JOptionPane.showMessageDialog(null, "La sección se ha modificado exitosamente");
+                JOptionPane.showMessageDialog(null, "La asignatura se ha agregado exitosamente");
                 InformacionAlumnos infoalum = new InformacionAlumnos();
                 infoalum.setVisible(true);
                 this.dispose();
@@ -185,7 +176,14 @@ public class ModificarMaterias extends javax.swing.JFrame {
                 System.out.println("Ha ocurrio un error al actualizar la seccion " + e);
             }
         }
-    }//GEN-LAST:event_jButton_ActualizarActionPerformed
+    }//GEN-LAST:event_jButton_AñadirActionPerformed
+
+    private void cmb_nombre_materiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_nombre_materiaItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cmb_seccion_materia.setModel(new DefaultComboBoxModel(LlenarComboBox.ComboBoxSeccion(cmb_nombre_materia.getSelectedItem().toString())));
+            LlenarJLabel.LabelCodigo(jLabel_codigo_materia, cmb_nombre_materia.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_cmb_nombre_materiaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -204,27 +202,28 @@ public class ModificarMaterias extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModificarMaterias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarMateriasAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModificarMaterias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarMateriasAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModificarMaterias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarMateriasAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModificarMaterias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarMateriasAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModificarMaterias().setVisible(true);
+                new RegistrarMateriasAlumnos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmb_nombre_materia;
     private javax.swing.JComboBox<String> cmb_seccion_materia;
-    private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_Añadir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -232,7 +231,5 @@ public class ModificarMaterias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_codigo_materia;
     private javax.swing.JLabel jLabel_fondo;
     private javax.swing.JLabel jLabel_footer;
-    private javax.swing.JLabel jLabel_nombre_materia;
     // End of variables declaration//GEN-END:variables
-
 }

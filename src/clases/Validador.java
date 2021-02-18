@@ -97,7 +97,7 @@ public class Validador {
          * tengan 1 espacio de separación y se envia la variable verificado a
          * las vistas "Registro".
          */
-        if (acceso == (nombre.length() - 1) && acceso2 >= 1) {
+        if (acceso == (nombre.length() - 1) || acceso == (nombre.length() - 2) && acceso2 >= 1) {
             verificado = true;
         } else {
             verificado = false;
@@ -426,5 +426,187 @@ public class Validador {
         } else {
             verificado = false;
         }
+    }
+
+    public void ValidarNombreMateria() {
+        /**
+         * Rellenar el vector unidemensional "caracter[]" para que tenga cada
+         * una de las letras que se encuentran en la variable String
+         * "verificarpalabra" con un bucle for
+         */
+        for (int i = 0; i < posiciones; i++) {
+            caracter[i] = verificarpalabra.substring(i, i + 1);
+        }
+
+        /**
+         * Se inicia con un bucle for con el cual se va a verificar cada
+         * caracter de la cadena de caracteres que se envian a través de las
+         * vistas "Registrar" almacenado en la variable "nombre".
+         */
+        for (int i = 0; i < nombre.length(); i++) {
+
+            /**
+             * Se realiza un bucle for para recorrer el vector "caracter[]" y
+             * verificar que ese caracter pertenezca al grupo de caracteres
+             * almacenados en el vector y de ser correcto esta comprobación,
+             * ".equals", se incrementa la variable de acceso "acceso" en 1.
+             */
+            for (int j = 0; j < posiciones; j++) {
+                if (nombre.substring(i, i + 1).equals(caracter[j])) {
+                    acceso++;
+                }
+            }
+
+            /**
+             * Se comprueba que la cadena de caracteres en la variable "nombre"
+             * solo contenga 1 espacio de separación.
+             */
+            if (nombre.substring(i, i + 1).equals(" ")) {
+                acceso2++;
+            }
+        }
+
+        /**
+         * Se comprueba que la variable acceso haya aumentado tantas veces como
+         * caracteres tiene la variable "nombre" para saber que cada uno si
+         * pertenece al grupo de caracteres en el vector "caracter[]" y que solo
+         * tengan 1 espacio de separación y se envia la variable verificado a
+         * las vistas "Registro".
+         */
+        if (acceso > 0) {
+            if (acceso == (nombre.length() - 1) || acceso == (nombre.length() - 2) || acceso == (nombre.length() - 3)
+                    || acceso == (nombre.length() - 4) || acceso == (nombre.length() - 5) || acceso == (nombre.length() - 6)
+                    && acceso2 >= 1 || acceso2 == 0) {
+                verificado = true;
+            } else {
+                verificado = false;
+            }
+        } else {
+            verificado = false;
+        }
+    }
+
+    public void ValidadorCodigoMateria() {
+        /**
+         * Rellenar el vector unidemensional "caracter[]" para que tenga cada
+         * una de las letras que se encuentran en la variable String
+         * "verificarpalabra" con un bucle for
+         */
+        for (int i = 0; i < posiciones; i++) {
+            caracter[i] = verificarpalabra.substring(i, i + 1);
+        }
+
+        /**
+         * Rellenar el vector unidemensional "caracternumeros[]" para que tenga
+         * cada uno de los numeros que se encuentran en la variable String
+         * "verificarnumeros" con un bucle for.
+         */
+        for (int i = 0; i < posicionesnumeros; i++) {
+            caracternumeros[i] = verificarnumeros.substring(i, i + 1);
+        }
+
+        /**
+         * Se inicia con un bucle for con el cual se va a verificar cada
+         * caracter de la cadena de caracteres que se envian a través de las
+         * vistas "Registrar" almacenado en la variable "nombre".
+         */
+        for (int i = 0; i < nombre.length(); i++) {
+
+            /**
+             * Se realiza un bucle for para recorrer el vector "caracter[]" y
+             * verificar que ese caracter pertenezca al grupo de caracteres
+             * almacenados en el vector y de ser correcto esta comprobación,
+             * ".equals", se incrementa la variable de acceso "acceso" en 1.
+             */
+            for (int j = 0; j < posiciones; j++) {
+                if (nombre.substring(i, i + 1).equals(caracter[j])) {
+                    acceso++;
+                }
+            }
+
+            for (int j = 0; j < posicionesnumeros; j++) {
+                if (nombre.substring(i, i + 1).equals(caracternumeros[j])) {
+                    acceso++;
+                }
+            }
+        }
+
+        if (acceso == nombre.length()) {
+            verificado = true;
+        } else {
+            verificado = false;
+        }
+    }
+
+    public void ValidadorSeccionMateria() {
+        /**
+         * Rellenar el vector unidemensional "caracternumeros[]" para que tenga
+         * cada uno de los numeros que se encuentran en la variable String
+         * "verificarnumeros" con un bucle for.
+         */
+        for (int i = 0; i < posicionesnumeros; i++) {
+            caracternumeros[i] = verificarnumeros.substring(i, i + 1);
+        }
+
+        for (int i = 0; i < nombre.length(); i++) {
+            for(int j=0; j<posicionesnumeros; j++){
+                if(nombre.contains(caracternumeros[j])){
+                    acceso2++;
+                }
+            }
+            if (nombre.substring(i, i + 1).equals(",") && nombre.length() > 1) {
+
+                /**
+                 * Se realiza un bucle for para recorrer, ".substring", la
+                 * cadena de caracteres que se encuentran antes del caracter ","
+                 * y se verifica que ese caracter pertenezca al grupo de
+                 * caracteres almacenados en el vector "caracter[]" también
+                 * recorrido por otro bucle for para analizar cada uno de los
+                 * casos y de ser correcto esta comprobación, ".equals", se
+                 * incrementa la variable de acceso "acceso2" en 1.
+                 */
+                for (int j = 0; j < i + 1; j++) {
+                    for (int k = 0; k < posicionesnumeros; k++) {
+                        if (email.substring(0, j).equals(caracternumeros[k])) {
+                            acceso++;
+                        }
+                    }
+                }
+
+                /**
+                 * Se recorre, ".substring", la cadena de caracteres que se
+                 * encuentran después del caracter "." y se verifica que ese
+                 * caracter pertenezca al grupo de caracteres almacenados en el
+                 * vector "caracter[]" recorrido por un bucle for para analizar
+                 * cada uno de los casos y de ser correcto esta comprobación,
+                 * ".equals", se incrementa la variable de acceso "acceso2" en
+                 * 1.
+                 */
+                for (int j = i; j < nombre.length(); j++) {
+                    for (int m = 0; m < posicionesnumeros; m++) {
+                        if (email.substring(j, email.length()).equals(caracternumeros[m])) {
+                            acceso++;
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * La variable "validarpar" tiene el valor del resto perteneciente al
+         * dividir el valor total de la variable "acceso" entre 2 para conocer
+         * si es un numero par o no, debido a que si se cumplen todas las
+         * condiciones satisfactoriamente debería tener un número par.
+         */
+        validarpar = acceso % 2;
+
+        if (acceso2>0) {
+            if (validarpar == 0) {
+                verificado = true;
+            } else {
+                verificado = false;
+            }
+        }
+
     }
 }

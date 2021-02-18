@@ -124,6 +124,7 @@ public class GestionarAdministradores extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_administradores = new javax.swing.JTable();
+        jButton_refrescar = new javax.swing.JButton();
         jLabel_footer = new javax.swing.JLabel();
         jLabel_fondo = new javax.swing.JLabel();
 
@@ -132,10 +133,10 @@ public class GestionarAdministradores extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gestionar Administradores");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jTable_administradores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,12 +153,28 @@ public class GestionarAdministradores extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 970, 180));
 
+        jButton_refrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
+        jButton_refrescar.setBorder(null);
+        jButton_refrescar.setContentAreaFilled(false);
+        jButton_refrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_refrescarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_refrescar, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, 40, 32));
+
         jLabel_footer.setText("Creado por Manuel Torrealba y Stefany Villamizar");
         getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, -1, -1));
         getContentPane().add(jLabel_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_refrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_refrescarActionPerformed
+        dispose();
+        GestionarAdministradores gestionadmin = new GestionarAdministradores();
+        gestionadmin.setVisible(true);
+    }//GEN-LAST:event_jButton_refrescarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,6 +212,7 @@ public class GestionarAdministradores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_refrescar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_fondo;
     private javax.swing.JLabel jLabel_footer;

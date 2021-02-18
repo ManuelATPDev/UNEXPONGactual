@@ -131,6 +131,11 @@ public class Administrador extends javax.swing.JFrame {
 
         jButton_Materias.setBackground(new java.awt.Color(255, 255, 255));
         jButton_Materias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/materias.png"))); // NOI18N
+        jButton_Materias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_MateriasActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_Materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 140, 140));
 
         jButton_GestionarAdministradores.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,6 +158,11 @@ public class Administrador extends javax.swing.JFrame {
 
         jButton_ImprimirReporte.setBackground(new java.awt.Color(255, 255, 255));
         jButton_ImprimirReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imprimirreporte.png"))); // NOI18N
+        jButton_ImprimirReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ImprimirReporteActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_ImprimirReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 260, 140, 140));
 
         jButton_AcercaDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acercade.png"))); // NOI18N
@@ -186,7 +196,7 @@ public class Administrador extends javax.swing.JFrame {
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Materias");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(525, 210, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, -1, -1));
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Creado por Manuel Torrealba y Stefany Villamizar");
@@ -219,6 +229,16 @@ public class Administrador extends javax.swing.JFrame {
         GestionarAlumnos gestionalum = new GestionarAlumnos();
         gestionalum.setVisible(true);
     }//GEN-LAST:event_jButton_GestionarAlumnosActionPerformed
+
+    private void jButton_MateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_MateriasActionPerformed
+        GestionarMaterias gestion_materias = new GestionarMaterias();
+        gestion_materias.setVisible(true);
+    }//GEN-LAST:event_jButton_MateriasActionPerformed
+
+    private void jButton_ImprimirReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ImprimirReporteActionPerformed
+        GestionarReportes gestion_reporte = new GestionarReportes();
+        gestion_reporte.setVisible(true);
+    }//GEN-LAST:event_jButton_ImprimirReporteActionPerformed
 
     /**
      * @param args the command line arguments

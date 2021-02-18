@@ -7,12 +7,16 @@ package ventanas;
 
 import java.sql.*;
 import clases.Conexion;
+import clases.Imprimir;
+import clases.Render;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -22,22 +26,26 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Manuel
  */
-public class GestionarAlumnos extends javax.swing.JFrame {
+public class GestionarReportes extends javax.swing.JFrame {
 
     String user;
+    int alumno_id = 0;
     String[] user2;
-    public static String user_update = "", especialidad_update = "";
-    public static int ID_update;
-    DefaultTableModel model = new DefaultTableModel(); //Acceso a los métodos necesarios para modificar una tabla
+    DefaultTableModel model = new DefaultTableModel() {  //Acceso a los métodos necesarios para modificar una tabla
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
 
     /**
      * Creates new form GestionarAdministradores
      */
-    public GestionarAlumnos() {
+    public GestionarReportes() {
         initComponents();
         user = Administrador.nombre_usuario;
         user2 = user.split(" ");
-        setTitle("Gestionar Administradores - Sesión de " + user2[0]);
+        setTitle("Gestionar Reportes de Inscripción - Sesión de " + user2[0]);
 
         setSize(970, 360);
         setResizable(false);
@@ -53,60 +61,8 @@ public class GestionarAlumnos extends javax.swing.JFrame {
         //Instruccion necesaria para aplicar los cambios
         this.repaint();
 
-        try {
-            Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement(
-                    "select id, nombres, apellidos, cedula, expediente, especialidad, email, estatus, registrado_por from alumnos");
+        Tabla(jTable_reportes);
 
-            ResultSet rs = pst.executeQuery();
-
-            jTable_administradores = new JTable(model);
-            jScrollPane1.setViewportView(jTable_administradores);
-
-            model.addColumn(" ");
-            model.addColumn("Nombres");
-            model.addColumn("Apellidos");
-            model.addColumn("Cédula");
-            model.addColumn("Expediente");
-            model.addColumn("Especialidad");
-            model.addColumn("Correo Electrónico");
-            model.addColumn("Estatus");
-            model.addColumn("Registrado por");
-
-            while (rs.next()) {
-                Object[] fila = new Object[9];
-
-                for (int i = 0; i < 9; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                    jTable_administradores.setDefaultEditor(model.getColumnClass(i), null);
-                }
-
-                model.addRow(fila);
-            }
-
-            cn.close();
-
-        } catch (SQLException e) {
-            System.err.println("Error al llenar tabla" + e);
-            JOptionPane.showMessageDialog(null, "Error al mostrar la informacion. Contacte con un administrador");
-        }
-
-        jTable_administradores.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int fila_point = jTable_administradores.rowAtPoint(e.getPoint());
-                int columna_point = 1, columna_point2 = 0, columna_point3 = 5;
-
-                if (fila_point >= 0 && columna_point >= 0 && e.getClickCount() == 2) {
-                    user_update = (String) model.getValueAt(fila_point, columna_point);
-                    ID_update = ((Long) model.getValueAt(fila_point, columna_point2)).intValue();
-                    especialidad_update = (String)model.getValueAt(fila_point, columna_point3);
-                    InformacionAlumnos informacionalum = new InformacionAlumnos();
-                    informacionalum.setVisible(true);
-                }
-            }
-
-        });
     }
 
     @Override
@@ -126,7 +82,7 @@ public class GestionarAlumnos extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_administradores = new javax.swing.JTable();
+        jTable_reportes = new javax.swing.JTable();
         jButton_refrescar = new javax.swing.JButton();
         jLabel_footer = new javax.swing.JLabel();
         jLabel_fondo = new javax.swing.JLabel();
@@ -138,23 +94,24 @@ public class GestionarAlumnos extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gestionar Alumnos");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, -1, -1));
+        jLabel1.setText("Gestionar Reportes de Inscripción");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
-        jTable_administradores.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_reportes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable_administradores);
+        jTable_reportes.setRowHeight(40);
+        jScrollPane1.setViewportView(jTable_reportes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 970, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 965, 180));
 
         jButton_refrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
         jButton_refrescar.setBorder(null);
@@ -175,7 +132,7 @@ public class GestionarAlumnos extends javax.swing.JFrame {
 
     private void jButton_refrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_refrescarActionPerformed
         dispose();
-        GestionarAlumnos gestionalum = new GestionarAlumnos();
+        GestionarReportes gestionalum = new GestionarReportes();
         gestionalum.setVisible(true);
     }//GEN-LAST:event_jButton_refrescarActionPerformed
 
@@ -196,21 +153,27 @@ public class GestionarAlumnos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionarReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GestionarAlumnos().setVisible(true);
+                new GestionarReportes().setVisible(true);
             }
         });
     }
@@ -221,6 +184,78 @@ public class GestionarAlumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_fondo;
     private javax.swing.JLabel jLabel_footer;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_administradores;
+    private javax.swing.JTable jTable_reportes;
     // End of variables declaration//GEN-END:variables
+
+    private void Tabla(JTable tabla) {
+        tabla.setDefaultRenderer(Object.class, new Render());
+        JButton jButton_imprimir_reporte = new JButton("PDF");
+        //Clase ImageIcon que permite asignar una imagen a un jButton con la ruta en: ("")
+        ImageIcon pdf = new ImageIcon("src/images/pdfdescargar2-Icon Icons from www.icon-icons.com.png");
+        //Se le asigna la imagen de fondo al jLabel_fondo
+        jButton_imprimir_reporte.setIcon(pdf);
+        jButton_imprimir_reporte.setBorder(null);
+        jButton_imprimir_reporte.setName("imprimir");
+
+        model.addColumn(" ");
+        model.addColumn("Nombres");
+        model.addColumn("Apellidos");
+        model.addColumn("Cédula");
+        model.addColumn("Expediente");
+        model.addColumn("Especialidad");
+        model.addColumn("Correo Electrónico");
+        model.addColumn("Estatus");
+        model.addColumn("Registrado por");
+        model.addColumn("Descargar");
+
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT id, nombres, apellidos, cedula, expediente, especialidad, email, estatus, registrado_por FROM alumnos");
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Object[] fila = new Object[10];
+
+                for (int i = 0; i < 9; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                fila[9] = jButton_imprimir_reporte;
+                model.addRow(fila);
+            }
+
+            jTable_reportes.setModel(model);
+
+            cn.close();
+
+        } catch (SQLException e) {
+            System.err.println("Error al llenar tabla " + e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar la informacion. Contacte con un administrador");
+        }
+
+        tabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = tabla.rowAtPoint(e.getPoint());
+                int columna_point = tabla.columnAtPoint(e.getPoint());
+
+                if (fila_point >= 0 && columna_point >= 0) {
+                    Object value = jTable_reportes.getValueAt(fila_point, columna_point);
+                    if (value instanceof JButton) {
+                        ((JButton) value).doClick();
+                        JButton boton = (JButton) value;
+
+                        if (boton.getName().equals("imprimir")) {
+                            alumno_id = ((Number) jTable_reportes.getValueAt(fila_point, 0)).intValue();
+                            Imprimir imprimir = new Imprimir();
+                            imprimir.ImprimirReporteDeInscripcion(alumno_id);
+                        }
+                    }
+                }
+            }
+
+        });
+
+    }
 }

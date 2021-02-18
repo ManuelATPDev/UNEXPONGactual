@@ -6,29 +6,22 @@
 package ventanas;
 
 import clases.Validador;
-import clases.TablaMaterias;
 import clases.Render;
-import clases.EncriptarPassword;
 import clases.Conexion;
+import clases.Imprimir;
 import java.awt.Color;
-import java.awt.Component;
 import java.sql.*;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
-import javax.swing.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import static ventanas.GestionarAdministradores.ID_update;
-import static ventanas.GestionarAdministradores.user_update;
 
 /**
  *
@@ -39,7 +32,8 @@ public class InformacionAlumnos extends javax.swing.JFrame {
     public static String materia_codigo = "", materia_nombre = "", materia_seccion = "", materias;
     String user, user_update;
     int ID_update, actualizar_pestaña2;
-    String[] user2, user3, materia2, materia;
+    String[] user2, user3, materia2;
+    public static String[] materia;
     DefaultTableModel model = new DefaultTableModel() {  //Acceso a los métodos necesarios para modificar una tabla
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -61,7 +55,7 @@ public class InformacionAlumnos extends javax.swing.JFrame {
         setTitle("Información del alumno(a): " + user3[0] + " - Sesión de " + user2[0]);
         jLabel_Titulo.setText("Información del alumno(a): " + user3[0]);
 
-        setSize(690, 720);
+        setSize(860, 720);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -181,7 +175,7 @@ public class InformacionAlumnos extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Materias Inscritas:");
         jLabel2.setToolTipText("");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, -1, -1));
 
         txt_nombre.setBackground(new java.awt.Color(5, 125, 203));
         txt_nombre.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -315,7 +309,7 @@ public class InformacionAlumnos extends javax.swing.JFrame {
 
             }
         ));
-        jTable_materias.setRowHeight(30);
+        jTable_materias.setRowHeight(40);
         jTable_materias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable_materiasMouseClicked(evt);
@@ -323,45 +317,54 @@ public class InformacionAlumnos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable_materias);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 430, 190));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 580, 260));
 
         jButton_Actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizaradministradores-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
         jButton_Actualizar.setBorder(null);
+        jButton_Actualizar.setContentAreaFilled(false);
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 580, 90, 80));
+        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 580, 90, 80));
 
-        jButton_materias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/materias2.png"))); // NOI18N
+        jButton_materias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregarmateria-Icon Icons from www.icon-icons.com.png"))); // NOI18N
         jButton_materias.setBorder(null);
+        jButton_materias.setContentAreaFilled(false);
         jButton_materias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_materiasActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 580, 90, 80));
+        getContentPane().add(jButton_materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 580, 90, 80));
 
         jButton_Password.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizarcontraseña-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
         jButton_Password.setBorder(null);
+        jButton_Password.setContentAreaFilled(false);
         jButton_Password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_PasswordActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 580, 90, 80));
+        getContentPane().add(jButton_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 580, 90, 80));
 
-        jButton_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresora-Icon made by Freepik Icons from www.flaticon.com.png"))); // NOI18N
+        jButton_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pdfdescargar-Icon Icons from www.icon-icons.com.png"))); // NOI18N
         jButton_imprimir.setBorder(null);
-        getContentPane().add(jButton_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 130, 120));
+        jButton_imprimir.setContentAreaFilled(false);
+        jButton_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_imprimirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, 140, 130));
 
         jLabel_footer.setForeground(new java.awt.Color(0, 0, 0));
         jLabel_footer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_footer.setText("Creado por Manuel Torrealba y Stefany Villamizar");
         jLabel_footer.setToolTipText("");
-        getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 670, -1, -1));
-        getContentPane().add(jLabel_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 690));
+        getContentPane().add(jLabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 670, -1, -1));
+        getContentPane().add(jLabel_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -541,7 +544,9 @@ public class InformacionAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton_materiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_materiasActionPerformed
-
+        dispose();
+        RegistrarMateriasAlumnos registrarmeterias = new RegistrarMateriasAlumnos();
+        registrarmeterias.setVisible(true);
     }//GEN-LAST:event_jButton_materiasActionPerformed
 
     private void jButton_PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PasswordActionPerformed
@@ -560,6 +565,11 @@ public class InformacionAlumnos extends javax.swing.JFrame {
     private void jTable_materiasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_materiasMouseClicked
 
     }//GEN-LAST:event_jTable_materiasMouseClicked
+
+    private void jButton_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_imprimirActionPerformed
+        Imprimir imprimirreporte = new Imprimir();
+        imprimirreporte.ImprimirReporteDeInscripcion(ID_update);
+    }//GEN-LAST:event_jButton_imprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -635,8 +645,19 @@ public class InformacionAlumnos extends javax.swing.JFrame {
     private void Tabla(JTable tabla) {
         tabla.setDefaultRenderer(Object.class, new Render());
         JButton jButton_modificar = new JButton("Modificar");
+        //Clase ImageIcon que permite asignar una imagen a un jButton con la ruta en: ("")
+        ImageIcon modificar = new ImageIcon("src/images/editar-Icon made by Kiranshastry Icons from www.flaticon.com.png");
+        //Se le asigna la imagen de fondo al jLabel_fondo
+        jButton_modificar.setIcon(modificar);
+        jButton_modificar.setBorder(null);
         jButton_modificar.setName("modificar");
+        
         JButton jButton_eliminar = new JButton("Eliminar");
+        //Clase ImageIcon que permite asignar una imagen a un jButton con la ruta en: ("")
+        ImageIcon eliminar = new ImageIcon("src/images/eliminar-Icon made by Kiranshastry Icons from www.flaticon.com.png");
+        //Se le asigna la imagen de fondo al jLabel_fondo
+        jButton_eliminar.setIcon(eliminar);
+        jButton_eliminar.setBorder(null);
         jButton_eliminar.setName("eliminar");
 
         model.addColumn("Código");
@@ -684,24 +705,40 @@ public class InformacionAlumnos extends javax.swing.JFrame {
                                 InformacionAlumnos.this.dispose();
                             }
                         } else if (boton.getName().equals("eliminar")) {
+                            String materias_eliminar = "";
                             materia_codigo = (String) jTable_materias.getValueAt(fila_point, 0);
+                            materia_nombre = (String) jTable_materias.getValueAt(fila_point, 1);
+                            materia_seccion = (String) jTable_materias.getValueAt(fila_point, 2);
+                            InformacionAlumnos.this.dispose();
+                            int opcion = JOptionPane.showConfirmDialog(null, "Desea Eliminar la materia: " + materia_nombre + " del alumno(a): " + user3[0]);
 
-                            System.out.println(materias);
-                            if (materias.contains(materia_codigo)) {
-                                materias = materias.replaceAll(materia_codigo, "");
-                            }
-                            if (!materias.equals("")) {
-                                materias += "-";
-                            }
-                            System.out.println(materias);
-                            
+                            if (opcion == JOptionPane.YES_OPTION) {
+                                for (int i = 0; i < materia.length; i++) {
+                                    if (materia[i].contains(materia_codigo)) {
+                                        materia[i] = materia[i].replaceAll(materia[i], "");
+                                    }
+                                    if (!materia[i].equals("")) {
+                                        materias_eliminar += materia[i] + "-";
+                                    }
+                                }
+                                try {
+                                    Connection cn3 = Conexion.conectar();
+                                    PreparedStatement pst3 = cn3.prepareStatement(
+                                            "UPDATE alumnos set materias_inscritas = ? WHERE id = " + ID_update);
+                                    pst3.setString(1, materias_eliminar);
+                                    pst3.executeUpdate();
+                                    cn3.close();
 
-                            //IDEA PARA ELIMINAR
-                            /**
-                             * String palabra = "AAABBB, HOLA, 12";
-                             * if(palabra.contains("AAABBB")){ palabra = ""; }
-                             * System.out.println(palabra);
-                             */
+                                    JOptionPane.showMessageDialog(null, "La materia se ha eliminado exitosamente");
+                                    InformacionAlumnos infoalum = new InformacionAlumnos();
+                                    infoalum.setVisible(true);
+                                } catch (SQLException e2) {
+                                    System.out.println("Ha ocurrio un error al eliminar la materia " + e2);
+                                }
+                            } else {
+                                InformacionAlumnos infoalum = new InformacionAlumnos();
+                                infoalum.setVisible(true);
+                            }
                         }
                     }
                 }
@@ -715,14 +752,17 @@ public class InformacionAlumnos extends javax.swing.JFrame {
         txt_nombre.setText("");
         txt_apellido.setText("");
         txt_cedula.setText("");
+        txt_expediente.setText("");
         txt_email.setText("");
         cmb_estatus.setSelectedIndex(0);
+        cmb_especialidad.setSelectedIndex(0);
     }
 
     private void Verificado() {
         txt_nombre.setBackground(Color.green);
         txt_apellido.setBackground(Color.green);
         txt_cedula.setBackground(Color.green);
+        txt_expediente.setBackground(Color.green);
         txt_email.setBackground(Color.green);
     }
 }
