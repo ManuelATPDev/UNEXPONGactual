@@ -153,12 +153,6 @@ public class Login extends javax.swing.JFrame {
 
                 ResultSet rs = pst.executeQuery();
 
-                PreparedStatement pst2 = cn.prepareStatement(
-                    "select estatus from alumnos where email = '" + user
-                    + "' and password = '" + passencode + "'");
-
-                ResultSet rs2 = pst2.executeQuery();
-
                 if (rs.next()) {
 
                     String estatus = rs.getString("estatus");
@@ -167,19 +161,6 @@ public class Login extends javax.swing.JFrame {
                         //Metodo para cerrar la interfaz de Login
                         dispose();
                         new Administrador().setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Actualmente se encuentra inactivo, por favor comuniquese con un administrador.");
-                        txt_usuario.setText("");
-                        txt_password.setText("");
-                    }
-
-                } else if (rs2.next()) {
-                    String estatus = rs2.getString("estatus");
-
-                    if (estatus.equalsIgnoreCase("Activo")) {
-                        //Metodo para cerrar la interfaz de Login
-                        dispose();
-                        new Alumno().setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "Actualmente se encuentra inactivo, por favor comuniquese con un administrador.");
                         txt_usuario.setText("");

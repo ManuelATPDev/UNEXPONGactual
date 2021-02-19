@@ -8,7 +8,6 @@ package ventanas;
 import java.sql.*;
 import clases.Conexion;
 import clases.Render;
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
