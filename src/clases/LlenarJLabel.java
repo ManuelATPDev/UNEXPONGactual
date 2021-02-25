@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class LlenarJLabel {
-    public static void LabelCodigo(JLabel jLabel_codigo_materia, String materia_nombre) {
+    public static void LabelCodigo(JLabel jLabel_codigo_materia, String materia_nombre, String especialidad_update) {
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "SELECT codigo from materias where asignatura = '" + materia_nombre + "'");
+                    "SELECT codigo from materias where asignatura = '" + materia_nombre + "' AND especialidad = '"+especialidad_update+"'");
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 jLabel_codigo_materia.setText(rs.getString("codigo"));

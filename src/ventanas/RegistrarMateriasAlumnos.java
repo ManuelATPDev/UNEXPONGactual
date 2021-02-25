@@ -181,7 +181,7 @@ public class RegistrarMateriasAlumnos extends javax.swing.JFrame {
     private void cmb_nombre_materiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_nombre_materiaItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             cmb_seccion_materia.setModel(new DefaultComboBoxModel(LlenarComboBox.ComboBoxSeccion(cmb_nombre_materia.getSelectedItem().toString())));
-            LlenarJLabel.LabelCodigo(jLabel_codigo_materia, cmb_nombre_materia.getSelectedItem().toString());
+            LlenarJLabel.LabelCodigo(jLabel_codigo_materia, cmb_nombre_materia.getSelectedItem().toString(), especialidad_update);
         }
     }//GEN-LAST:event_cmb_nombre_materiaItemStateChanged
 
